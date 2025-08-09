@@ -57,6 +57,49 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Docker 실행
+
+### 이미지 빌드
+```bash
+# 이미지 빌드
+$ docker build -t pet-backend .
+
+# 특정 태그로 빌드
+$ docker build -t pet-backend:latest .
+```
+
+### 컨테이너 실행
+```bash
+# 기본 실행 (포트 3000)
+$ docker run -p 3000:3000 pet-backend
+
+# 백그라운드 실행
+$ docker run -d -p 3000:3000 --name pet-backend-container pet-backend
+
+# 환경변수와 함께 실행
+$ docker run -p 3000:3000 -e NODE_ENV=production -e PORT=3000 pet-backend
+```
+
+### 접속 URL
+- 메인 API: http://localhost:3000
+- Swagger 문서: http://localhost:3000/api
+- API JSON: http://localhost:3000/api-json
+
+### 컨테이너 관리
+```bash
+# 실행 중인 컨테이너 확인
+$ docker ps
+
+# 컨테이너 중지
+$ docker stop pet-backend-container
+
+# 컨테이너 제거
+$ docker rm pet-backend-container
+
+# 이미지 제거
+$ docker rmi pet-backend
+```
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.

@@ -17,7 +17,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:build": "docker build -t pet-backend .",
+    "docker:run": "docker run -p 3000:3000 pet-backend",
+    "docker:run:bg": "docker run -d -p 3000:3000 --name pet-backend-container pet-backend",
+    "docker:run:detached": "docker run -d -p 3000:3000 --name pet-backend-container pet-backend",
+    "docker:stop": "docker stop pet-backend-container",
+    "docker:remove": "docker rm pet-backend-container",
+    "docker:clean": "docker rmi pet-backend",
+    "docker:logs": "docker logs pet-backend-container",
+    "docker:logs:follow": "docker logs -f pet-backend-container",
+    "docker:restart": "npm run docker:stop && npm run docker:remove && npm run docker:build && npm run docker:run:bg"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
