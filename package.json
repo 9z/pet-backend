@@ -30,8 +30,12 @@
     "docker:restart": "npm run docker:stop && npm run docker:remove && npm run docker:build && npm run docker:run:bg",
     "ecr:create": "./deploy/create-ecr.sh",
     "ecr:push": "./deploy/push-to-ecr.sh",
+    "ecs:cluster": "./deploy/ecs-cluster.sh",
+    "ecs:task": "./deploy/create-task-definition.sh",
     "deploy:setup": "npm run ecr:create",
-    "deploy:push": "npm run ecr:push"
+    "deploy:push": "npm run ecr:push",
+    "deploy:cluster": "npm run ecs:cluster",
+    "deploy:task": "npm run ecs:task"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

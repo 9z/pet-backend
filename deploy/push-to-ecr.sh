@@ -29,15 +29,34 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 타임스탬프 태그 생성
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+
 # 이미지 태깅
 echo "🏷️ 이미지를 태깅 중..."
 docker tag $REPOSITORY_NAME:latest $REPOSITORY_URI:latest
-docker tag $REPOSITORY_NAME:latest $REPOSITORY_URI:$(date +%Y%m%d-%H%M%S)
+docker tag $REPOSITORY_NAME:latest $REPOSITORY_URI:$TIMESTAMP
+
+echo "📋 생성된 태그: latest, $TIMESTAMP"
 
 # 이미지 푸시
 echo "📤 이미지를 ECR에 푸시 중..."
 docker push $REPOSITORY_URI:latest
-docker push $REPOSITORY_URI:$(date +%Y%m%d-%H%M%S)
+
+if [ $? -eq 0 ]; then
+    echo "✅ latest 태그 푸시 완료"
+    
+    docker push $REPOSITORY_URI:$TIMESTAMP
+    
+    if [ $? -eq 0 ]; then
+        echo "✅ $TIMESTAMP 태그 푸시 완료"
+    else
+        echo "❌ $TIMESTAMP 태그 푸시 실패"
+    fi
+else
+    echo "❌ latest 태그 푸시 실패"
+    exit 1
+fi
 
 if [ $? -eq 0 ]; then
     echo "✅ 이미지가 성공적으로 ECR에 푸시되었습니다!"
