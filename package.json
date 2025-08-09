@@ -27,7 +27,11 @@
     "docker:clean": "docker rmi pet-backend",
     "docker:logs": "docker logs pet-backend-container",
     "docker:logs:follow": "docker logs -f pet-backend-container",
-    "docker:restart": "npm run docker:stop && npm run docker:remove && npm run docker:build && npm run docker:run:bg"
+    "docker:restart": "npm run docker:stop && npm run docker:remove && npm run docker:build && npm run docker:run:bg",
+    "ecr:create": "./deploy/create-ecr.sh",
+    "ecr:push": "./deploy/push-to-ecr.sh",
+    "deploy:setup": "npm run ecr:create",
+    "deploy:push": "npm run ecr:push"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
